@@ -26,6 +26,7 @@
 #include <ros/console.h>
 #include <pluginlib/class_list_macros.h>
 #include <moveit/robot_state/conversions.h>
+#include <moveit/collision_plugin_loader/collision_plugin_loader.h>
 #include "stomp_moveit/cost_functions/collision_check.h"
 
 PLUGINLIB_EXPORT_CLASS(stomp_moveit::cost_functions::CollisionCheck,stomp_moveit::cost_functions::StompCostFunction)
@@ -151,7 +152,6 @@ bool CollisionCheck::setMotionPlanRequest(const planning_scene::PlanningSceneCon
                  moveit_msgs::MoveItErrorCodes& error_code)
 {
   using namespace moveit::core;
-
   planning_scene_ = planning_scene;
   plan_request_ = req;
   error_code.val = moveit_msgs::MoveItErrorCodes::SUCCESS;
@@ -243,7 +243,7 @@ bool CollisionCheck::computeCosts(const Eigen::MatrixXd& parameters,
 
       // checking robot vs world (attached objects, octomap, not in urdf) collisions
       result_world_collision.distance = std::numeric_limits<double>::max();
-
+      //ROS_ERROR("chomp is calling collision_world/robot....check...collision");
       collision_world_->checkRobotCollision(request,
                                             result_world_collision,
                                             *collision_robot_,
