@@ -250,13 +250,12 @@ bool Stomp::solve(const Eigen::MatrixXd& initial_parameters,
 
   while(current_iteration_ <= config_.num_iterations && runSingleIteration())
   {
-
-    ROS_DEBUG("STOMP completed iteration %i with cost %f",current_iteration_,current_lowest_cost_);
+    ROS_INFO("STOMP completed iteration %i with cost %f",current_iteration_,current_lowest_cost_);
 
 
     if(parameters_valid_)
     {
-      ROS_DEBUG("Found valid solution, will iterate %i more time(s) ",
+      ROS_INFO("Found valid solution, will iterate %i more time(s) ",
                config_.num_iterations_after_valid - valid_iterations);
 
       valid_iterations++;
@@ -782,6 +781,7 @@ bool Stomp::computeOptimizedCost()
 
 
     parameters_total_cost_ += parameters_state_costs_.sum();
+
   }
   else
   {
@@ -791,6 +791,7 @@ bool Stomp::computeOptimizedCost()
   if(current_lowest_cost_ > parameters_total_cost_)
   {
     current_lowest_cost_ = parameters_total_cost_;
+    //current_lowest_cost_splitted_ = parameters_total_cost_splitted_;
   }
   else
   {
