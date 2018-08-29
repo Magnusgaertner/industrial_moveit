@@ -220,7 +220,6 @@ bool CollisionCheck::computeCosts(const Eigen::MatrixXd& parameters,
   // collision
   collision_detection::CollisionRequest request = collision_request_;
   collision_detection::CollisionResult result_world_collision, result_robot_collision;
-  std::vector<collision_detection::CollisionResult> results(2);
   validity = true;
 
   // planning groups
@@ -255,17 +254,10 @@ bool CollisionCheck::computeCosts(const Eigen::MatrixXd& parameters,
                                            *robot_state_,
                                            planning_scene_->getAllowedCollisionMatrix());
 
-      results[0]= result_world_collision;
-      results[1] = result_robot_collision;
-      for(std::vector<collision_detection::CollisionResult>::iterator i = results.begin(); i != results.end(); i++)
-      {
-        collision_detection::CollisionResult& result = *i;
-        if(result.collision)
-        {
-          raw_costs_(t) = collision_penalty_;
-          validity = false;
-          break;
-        }
+
+      if(result_world_collision.collision || result_robot_collision.collision){
+        raw_costs_(t) = collision_penalty_;
+        validity = false;
       }
     }
 
@@ -285,6 +277,7 @@ bool CollisionCheck::computeCosts(const Eigen::MatrixXd& parameters,
       }
     }
   }
+
 
   // applying kernel smoothing
   if(!validity)
