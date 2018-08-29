@@ -165,7 +165,7 @@ bool ObstacleDistanceGradient::computeCosts(const Eigen::MatrixXd& parameters, s
       robot_state_->update();
       collision_result_.distance = max_distance_;
 
-      planning_scene_->checkSelfCollision(collision_request_,collision_result_,*robot_state_,planning_scene_->getAllowedCollisionMatrix());
+      planning_scene_->checkCollision(collision_request_,collision_result_,*robot_state_,planning_scene_->getAllowedCollisionMatrix());
       dist = collision_result_.collision ? -1.0 :collision_result_.distance ;
 
       if(dist >= max_distance_)
