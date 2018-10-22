@@ -242,7 +242,8 @@ bool CollisionCheck::computeCosts(const Eigen::MatrixXd& parameters,
 
       // checking robot vs world (attached objects, octomap, not in urdf) collisions
       result_world_collision.distance = std::numeric_limits<double>::max();
-      //ROS_ERROR("chomp is calling collision_world/robot....check...collision");
+      //ROS_ERROR("stomp is calling collision_world/robot....check...collision");
+
       collision_world_->checkRobotCollision(request,
                                             result_world_collision,
                                             *collision_robot_,
