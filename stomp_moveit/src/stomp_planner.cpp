@@ -206,7 +206,7 @@ bool StompPlanner::solve(planning_interface::MotionPlanDetailedResponse &res)
     if((ros::WallTime::now() - start_time) > allowed_time)
     {
       ROS_ERROR("%s exceeded allowed time of %f , terminating",getName().c_str(),allowed_time.toSec());
-      this->terminate();
+      this->terminate();//  why not if(this->terminate()){timeout_timer.stop();}
     }
 
   },false);
