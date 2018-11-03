@@ -343,7 +343,7 @@ bool CollisionCheck::checkIntermediateCollisions(const Eigen::VectorXd& start,
   {
     interval = i*dt;
     start_state->interpolate(*end_state,interval,*mid_state) ;
-    if(planning_scene_->isStateColliding(*mid_state))
+    if(planning_scene_->isStateColliding(*mid_state, group_name_))
     {
       return false;
     }
